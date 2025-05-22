@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture/core/di/injector.dart';
+import 'package:flutter_clean_architecture/core/extension/color_extension.dart';
 import 'package:flutter_clean_architecture/core/extension/localization_extension.dart';
 import 'package:flutter_clean_architecture/presentation/bloc/locale/language_bloc.dart';
 import 'package:flutter_clean_architecture/presentation/bloc/locale/language_event.dart';
@@ -29,7 +30,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.loc.goodbye)),
+      appBar: AppBar(title: Text(context.loc.goodbye,style: TextStyle(
+        color: context.appColors.p0
+      ),)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: BlocConsumer<LoginBloc, LoginState>(

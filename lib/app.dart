@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture/config/routes/app_routes.dart';
+import 'package:flutter_clean_architecture/config/theme/themes.dart';
 import 'package:flutter_clean_architecture/presentation/bloc/locale/language_bloc.dart';
 import 'package:flutter_clean_architecture/presentation/bloc/locale/language_state.dart';
 import 'package:flutter_clean_architecture/presentation/connectivity/connectivty_check.dart';
@@ -31,10 +32,7 @@ class AppView extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             title: 'Flutter Demo',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-            ),
+            theme: firstTheme,
             routerConfig: AppRouter.router,
             debugShowCheckedModeBanner: false,
             builder: (context, child) => ConnectivityListener(child: child!,),
