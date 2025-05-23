@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture/config/theme/theme_type.dart';
 import 'package:flutter_clean_architecture/core/di/injector.dart';
 import 'package:flutter_clean_architecture/core/extension/color_extension.dart';
 import 'package:flutter_clean_architecture/core/extension/localization_extension.dart';
 import 'package:flutter_clean_architecture/presentation/bloc/locale/language_bloc.dart';
 import 'package:flutter_clean_architecture/presentation/bloc/locale/language_event.dart';
+import 'package:flutter_clean_architecture/presentation/bloc/theme/theme_bloc.dart';
+import 'package:flutter_clean_architecture/presentation/bloc/theme/theme_event.dart';
 import 'package:flutter_clean_architecture/presentation/screen/login/bloc/login_bloc.dart';
 import 'package:flutter_clean_architecture/presentation/screen/login/bloc/login_event.dart';
 import 'package:flutter_clean_architecture/presentation/screen/login/bloc/login_state.dart';
@@ -24,15 +27,31 @@ class _LoginScreenState extends State<LoginScreen> {
   void _onLoginPressed() {
     final email = _emailController.text;
     final password = _passwordController.text;
-    context.read<LoginBloc>().add(LoginButtonPressed(email: email, password: password));
+    context
+        .read<LoginBloc>()
+        .add(LoginButtonPressed(email: email, password: password));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.loc.goodbye,style: TextStyle(
-        color: context.appColors.p0
-      ),)),
+      appBar: AppBar(
+        title: Text(
+          context.loc.goodbye,
+          style: TextStyle(color: context.appColors.p0),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () => showLanguageBottomSheet(context),
+              icon: Icon(Icons.language)),
+          IconButton(
+              onPressed: () => sl<ThemeBloc>().add(SetTheme(ThemeType.dark)),
+              icon: Icon(Icons.dark_mode)),
+          IconButton(
+              onPressed: () => sl<ThemeBloc>().add(SetTheme(ThemeType.light)),
+              icon: Icon(Icons.light_mode)),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: BlocConsumer<LoginBloc, LoginState>(
@@ -68,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextButton(
-                  onPressed: () => showLanguageBottomSheet(context),
+                  onPressed: () => {},
                   child: const Text("Don't have an account? Sign up"),
                 ),
               ],
@@ -78,38 +97,64 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
   void showLanguageBottomSheet(BuildContext context) {
     showModalBottomSheet(
       showDragHandle: true,
+      isScrollControlled: true,
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
-                  onTap: (){
-                    sl<LocaleBloc>().add(ChangeLocale(Locale('en')));
-                    Navigator.pop(context);
-                  },
-                  child: Text("English", style: TextStyle(fontSize: 16))),
-              SizedBox(height: 12),
+                onTap: () {
+                  sl<LocaleBloc>().add(ChangeLocale(Locale('en')));
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.grey.shade400),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('English'),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
               GestureDetector(
-                  onTap: (){
-                    sl<LocaleBloc>().add(ChangeLocale(Locale('hi')));
-                    Navigator.pop(context);
-                  },
-                  child: Text("Hindi", style: TextStyle(fontSize: 16))),
+                onTap: () {
+                  sl<LocaleBloc>().add(ChangeLocale(Locale('hi')));
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.grey.shade400),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Hindi'),
+                  ),
+                ),
+              ),
             ],
           ),
         );
       },
     );
   }
-
 }

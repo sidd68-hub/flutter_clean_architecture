@@ -6,6 +6,7 @@ import 'package:flutter_clean_architecture/domain/repositories/auth_repository.d
 import 'package:flutter_clean_architecture/domain/usecase/login_user.dart';
 import 'package:flutter_clean_architecture/presentation/bloc/connectivity/connectivity_bloc.dart';
 import 'package:flutter_clean_architecture/presentation/bloc/locale/language_bloc.dart';
+import 'package:flutter_clean_architecture/presentation/bloc/theme/theme_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -34,5 +35,7 @@ Future<void> init() async {
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
   sl.registerLazySingleton(() => ConnectivityBloc(sl<Connectivity>()));
   sl.registerLazySingleton<LocaleBloc>(() => LocaleBloc());
+  sl.registerLazySingleton<ThemeBloc>(() => ThemeBloc());
+
 
 }
