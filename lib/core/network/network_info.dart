@@ -1,8 +1,9 @@
+import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 abstract class NetworkInfo {
-  Stream<ConnectivityResult> get onConnectivityChanged;
   Future<bool> get isConnected;
+  Stream<ConnectivityResult> get onConnectivityChanged;
 }
 
 class NetworkInfoImpl implements NetworkInfo {
@@ -11,12 +12,23 @@ class NetworkInfoImpl implements NetworkInfo {
   NetworkInfoImpl(this.connectivity);
 
   @override
-  Stream<ConnectivityResult> get onConnectivityChanged =>
-      connectivity.onConnectivityChanged.map((results) => results.first);
+  Future<bool> get isConnected async {
+    try {
+      // Check actual internet connection
+      final result = await InternetAddress.lookup('google.com');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
+  }
 
   @override
-  Future<bool> get isConnected async {
-    final result = await connectivity.checkConnectivity();
-    return result != ConnectivityResult.none;
-  }
+  Stream<ConnectivityResult> get onConnectivityChanged =>
+      connectivity.onConnectivityChanged.map((list) {
+        // Just return the first non-none (fallback to none)
+        return list.firstWhere(
+              (e) => e != ConnectivityResult.none,
+          orElse: () => ConnectivityResult.none,
+        );
+      });
 }

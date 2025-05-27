@@ -16,16 +16,24 @@ class HomeScreen extends StatelessWidget {
           child: BlocConsumer<HomeBloc, HomeState>(
             listener: (context, state) {},
             builder: (context, state) {
-              print("The State is ${state.user}");
               return (state.isLoading == true)
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : ListView.builder(
-                      itemCount: state.user?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return Text("Hello ${state.user?[index].firstName}");
-                      });
+                  : Column(
+                      children: [
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: state.user?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return Text(
+                                  "Hello ${state.user?[index].firstName}");
+                            }),
+                        ElevatedButton(onPressed: (){
+                          context.read<HomeBloc>().add(InitialApiEvent());
+                        }, child: Text("Hit the api"))
+                      ],
+                    );
             },
           )),
     );
