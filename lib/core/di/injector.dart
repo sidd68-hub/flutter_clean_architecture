@@ -1,14 +1,12 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_clean_architecture/core/network/interceptor/auth_interceptor.dart';
-import 'package:flutter_clean_architecture/core/network/interceptor/error_interceptor.dart';
-import 'package:flutter_clean_architecture/core/network/interceptor/pretty_log.dart';
+import 'package:flutter_clean_architecture/core/network/api_client.dart';
+import 'package:flutter_clean_architecture/core/network/dio_client.dart';
 import 'package:flutter_clean_architecture/core/network/network_info.dart';
 import 'package:flutter_clean_architecture/data/datasources/auth_remote_datasource.dart';
 import 'package:flutter_clean_architecture/data/datasources/auth_remote_datasource_impl.dart';
 import 'package:flutter_clean_architecture/data/repositories/auth_repository_impl.dart';
 import 'package:flutter_clean_architecture/domain/repositories/auth_repository.dart';
-import 'package:flutter_clean_architecture/domain/usecase/login_use_case.dart';
 import 'package:flutter_clean_architecture/feature/bloc/connectivity/connectivity_bloc.dart';
 import 'package:flutter_clean_architecture/feature/bloc/locale/language_bloc.dart';
 import 'package:flutter_clean_architecture/feature/bloc/theme/theme_bloc.dart';
@@ -27,15 +25,12 @@ Future<void> init() async {
   // Network
   sl.registerLazySingleton<Connectivity>(() => Connectivity());
 
-  sl.registerLazySingleton<Dio>(() {
-    final dio = Dio(BaseOptions(baseUrl: 'https://reqres.in/'));
-    dio.interceptors.addAll([
-      // AuthInterceptor(sl<FlutterSecureStorage>()),
-      ErrorInterceptor(),
-      ...AppDioLogger.get(enableLogging: true)
-    ]);
-    return dio;
-  });
+  //dio
+  sl.registerLazySingleton<Dio>(() => DioClient().client);
+  sl.registerLazySingleton<ApiClient>(() => ApiClient(
+    dio: sl<Dio>(),
+    networkInfo: sl<NetworkInfo>(),
+  ));
 
   // Secure Storage
   sl.registerLazySingleton<FlutterSecureStorage>(() => const FlutterSecureStorage());
@@ -56,5 +51,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => HomeScreenUseCase(sl()));
   sl.registerLazySingleton(() => HomeBloc(sl()));
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
-  sl.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSourceImpl(apiClient: sl<ApiClient>()));
 }

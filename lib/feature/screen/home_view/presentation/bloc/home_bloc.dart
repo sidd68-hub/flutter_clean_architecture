@@ -28,8 +28,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(state.copyWith(isLoading: false, user: users,));
       },
       failure: (message, code) {
-        print("The Message is $message and code is $code");
+        print("The Error Caught $message");
         emit(state.copyWith(isLoading: false));
+        // throw Exception(message);
       },
     );
   }
