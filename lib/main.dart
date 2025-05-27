@@ -25,11 +25,3 @@ class _MyAppState extends State<MyApp> {
     return AppView();
   }
 }
-
-
-// Theme Bloc
-/*
-BlocProvider<ThemeBloc>(
-create: (_) => sl<ThemeBloc>(),
-child: MaterialApp.router(...),
-)*/
