@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/core/network/api_result.dart';
 import 'package:flutter_clean_architecture/feature/screen/home_view/domain/entities/home_user_entities.dart';
 import 'package:flutter_clean_architecture/feature/screen/home_view/domain/use_case/home_screen_use_case.dart';
@@ -24,7 +25,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try{
       final result = await homeScreenUseCase(page: 1);
       emit(state.copyWith(isLoading: false,user: result));
-    } on ApiFailure catch(_){
+    } on ApiFailure catch(e){
       emit(NoInternetState());
     }
     catch(e){
