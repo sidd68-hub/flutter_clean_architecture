@@ -14,7 +14,12 @@ class HomeScreen extends StatelessWidget {
       body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: BlocConsumer<HomeBloc, HomeState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              if (state is NoInternetState) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text('No Internet')));
+              }
+            },
             builder: (context, state) {
               return (state.isLoading == true)
                   ? Center(
@@ -29,9 +34,11 @@ class HomeScreen extends StatelessWidget {
                               return Text(
                                   "Hello ${state.user?[index].firstName}");
                             }),
-                        ElevatedButton(onPressed: (){
-                          context.read<HomeBloc>().add(InitialApiEvent());
-                        }, child: Text("Hit the api"))
+                        ElevatedButton(
+                            onPressed: () {
+                              context.read<HomeBloc>().add(InitialApiEvent());
+                            },
+                            child: Text("Hit the api"))
                       ],
                     );
             },

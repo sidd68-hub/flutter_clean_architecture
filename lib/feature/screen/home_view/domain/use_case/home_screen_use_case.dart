@@ -8,7 +8,7 @@ class HomeScreenUseCase{
   HomeScreenUseCase(this.repository);
 
 
-  Future<ApiResult<List<User>>> call({int page = 1}) {
+  Future<List<User>> call({int page = 1}) {
     return repository.fetchUser(page: page);
   }
 }

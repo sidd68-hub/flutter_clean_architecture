@@ -9,26 +9,24 @@ class HomeRepositoryImpl extends HomeRepository {
   HomeRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<ApiResult<List<User>>> fetchUser({int page = 1}) async {
-    final result = await remoteDataSource.fetchUser(page: page);
+  Future<List<User>> fetchUser({int page = 1}) async {
+    try {
+      final models = await remoteDataSource.fetchUser(page: page);
 
-    return result.when(
-      success: (models) {
-        // Map NewUserModel to User
-        final users = models
-            .map((e) => User(
-          id: e.id,
-          email: e.email,
-          firstName: e.firstName,
-          lastName: e.lastName,
-          avatar: e.avatar,
-        ))
-            .toList();
-        return ApiSuccess(users);
-      },
-      failure: (message, code) {
-        return ApiFailure(message, code);
-      },
-    );
+      final users = models
+          .map((e) => User(
+                id: e.id,
+                email: e.email,
+                firstName: e.firstName,
+                lastName: e.lastName,
+                avatar: e.avatar,
+              ))
+          .toList();
+      return users;
+    } on ApiFailure catch (e) {
+      throw ApiFailure(e.message,e.code);
+    } catch (e) {
+      throw Exception('Failed to fetch users: $e');
+    }
   }
 }

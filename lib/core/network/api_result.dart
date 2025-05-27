@@ -41,4 +41,8 @@ class ApiFailure<T> extends ApiResult<T> {
   final String message;
   final int? code;
   const ApiFailure(this.message, [this.code]);
+
+  @override
+  String toString() => 'ApiException: $message (Code: $code)';
 }
+

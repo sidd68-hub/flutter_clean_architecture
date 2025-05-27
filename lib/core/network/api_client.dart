@@ -14,7 +14,6 @@ class ApiClient {
 
   Future<ApiResult<T>> safeApiCall<T>(Future<T> Function() apiCall) async {
     final connected = await networkInfo.isConnected;
-    print("✅ Connected: $connected");
     if (!connected) {
       return ApiFailure('No Internet Connection', 1000);
     }
