@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture/core/di/injector.dart';
+import 'package:flutter_clean_architecture/feature/bloc/connectivity/connectivity_bloc.dart';
+import 'package:flutter_clean_architecture/feature/bloc/connectivity/connectivity_state.dart';
 import 'package:flutter_clean_architecture/main.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/connectivity/connectivity_bloc.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/connectivity/connectivity_state.dart';
 
 class ConnectivityListener extends StatefulWidget {
   final Widget child;

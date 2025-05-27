@@ -4,13 +4,13 @@ import 'package:flutter_clean_architecture/config/theme/theme_type.dart';
 import 'package:flutter_clean_architecture/core/di/injector.dart';
 import 'package:flutter_clean_architecture/core/extension/color_extension.dart';
 import 'package:flutter_clean_architecture/core/extension/localization_extension.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/locale/language_bloc.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/locale/language_event.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/theme/theme_bloc.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/theme/theme_event.dart';
-import 'package:flutter_clean_architecture/presentation/screen/login/bloc/login_bloc.dart';
-import 'package:flutter_clean_architecture/presentation/screen/login/bloc/login_event.dart';
-import 'package:flutter_clean_architecture/presentation/screen/login/bloc/login_state.dart';
+import 'package:flutter_clean_architecture/feature/bloc/locale/language_bloc.dart';
+import 'package:flutter_clean_architecture/feature/bloc/locale/language_event.dart';
+import 'package:flutter_clean_architecture/feature/bloc/theme/theme_bloc.dart';
+import 'package:flutter_clean_architecture/feature/bloc/theme/theme_event.dart';
+import 'package:flutter_clean_architecture/feature/screen/login/bloc/login_bloc.dart';
+import 'package:flutter_clean_architecture/feature/screen/login/bloc/login_event.dart';
+import 'package:flutter_clean_architecture/feature/screen/login/bloc/login_state.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -87,7 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+
+                  },
                   child: const Text("Don't have an account? Sign up"),
                 ),
               ],

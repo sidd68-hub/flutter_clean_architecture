@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture/config/routes/app_routes.dart';
-import 'package:flutter_clean_architecture/config/theme/themes.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/locale/language_bloc.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/locale/language_state.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/theme/theme_bloc.dart';
-import 'package:flutter_clean_architecture/presentation/bloc/theme/theme_state.dart';
-import 'package:flutter_clean_architecture/presentation/connectivity/connectivty_check.dart';
+import 'package:flutter_clean_architecture/feature/bloc/locale/language_bloc.dart';
+import 'package:flutter_clean_architecture/feature/bloc/locale/language_state.dart';
+import 'package:flutter_clean_architecture/feature/bloc/theme/theme_bloc.dart';
+import 'package:flutter_clean_architecture/feature/bloc/theme/theme_state.dart';
+import 'package:flutter_clean_architecture/feature/connectivity/connectivty_check.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/di/injector.dart';

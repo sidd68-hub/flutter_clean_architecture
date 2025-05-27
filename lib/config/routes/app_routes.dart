@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture/core/di/injector.dart';
+import 'package:flutter_clean_architecture/feature/screen/home_view/presentation/bloc/home_bloc.dart';
+import 'package:flutter_clean_architecture/feature/screen/home_view/presentation/view/home_screen.dart';
+import 'package:flutter_clean_architecture/feature/screen/login/bloc/login_bloc.dart';
+import 'package:flutter_clean_architecture/feature/screen/login/login_di/login_di.dart';
+import 'package:flutter_clean_architecture/feature/screen/login/login_screen.dart';
 import 'package:flutter_clean_architecture/main.dart';
-import 'package:flutter_clean_architecture/presentation/screen/login/bloc/login_bloc.dart';
-import 'package:flutter_clean_architecture/presentation/screen/home_view/bloc/home_bloc.dart';
-import 'package:flutter_clean_architecture/presentation/screen/home_view/view/home_screen.dart';
-import 'package:flutter_clean_architecture/presentation/screen/login/login_di/login_di.dart';
-import 'package:flutter_clean_architecture/presentation/screen/login/login_screen.dart';
 import 'package:go_router/go_router.dart';
 
 
@@ -14,7 +14,7 @@ class AppRouter{
     navigatorKey:  navigatorKey,
     routes: [
       GoRoute(
-        path: '/',
+        path: '/login',
         builder: (context, state) {
           initLoginModule();
           return BlocProvider(create: (_) => sl<LoginBloc>(),
@@ -22,10 +22,10 @@ class AppRouter{
         },
       ),
       GoRoute(
-        path: '/home',
+        path: '/',
         builder: (context, state) {
           return BlocProvider(
-            create: (_) => HomeBloc(),
+            create: (_) => sl<HomeBloc>(),
             child: const HomeScreen(),
           );
         },
