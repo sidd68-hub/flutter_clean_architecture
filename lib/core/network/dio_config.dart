@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_clean_architecture/flavour/environment.dart';
 
 class DioConfig {
   static BaseOptions get baseOptions => BaseOptions(
-    baseUrl: 'https://reqres.in/',
+    baseUrl: Environment.baseUrl,
     headers: {
       'x-api-key': 'reqres-free-v1',
     },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture/core/widgets/exception_dialog.dart';
 import 'package:flutter_clean_architecture/feature/screen/home_view/presentation/bloc/home_bloc.dart';
 
 class HomeScreen extends StatelessWidget {

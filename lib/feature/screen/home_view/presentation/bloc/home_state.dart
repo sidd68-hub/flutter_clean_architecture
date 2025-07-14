@@ -15,6 +15,12 @@ class HomeState extends Equatable {
   List<Object?> get props => [isLoading, user];
 }
 
-class NoInternetState extends HomeState{
+class NoInternetState extends HomeState {
+  final int? errorCode;
+  final String? errorMessage;
 
+  const NoInternetState({this.errorCode, this.errorMessage});
+
+  @override
+  List<Object?> get props => [errorCode, errorMessage];
 }

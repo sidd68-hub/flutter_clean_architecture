@@ -17,19 +17,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _onInitialApiCall(
-      InitialApiEvent event,
-      Emitter<HomeState> emit,
-      ) async {
+    InitialApiEvent event,
+    Emitter<HomeState> emit,
+  ) async {
     emit(state.copyWith(isLoading: true));
-    try{
+    try {
       final result = await homeScreenUseCase(page: 1);
-      emit(state.copyWith(isLoading: false,user: result));
-    } on ApiFailure catch(_){
-      emit(NoInternetState());
-    }
-    catch(e){
+      emit(state.copyWith(isLoading: false, user: result));
+    } on ApiFailure catch (e) {
+      emit(NoInternetState(errorCode: e.code, errorMessage: e.message));
+    } catch (e) {
       emit(state.copyWith(isLoading: false));
     }
   }
-
 }
